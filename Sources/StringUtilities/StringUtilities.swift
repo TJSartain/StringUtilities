@@ -168,7 +168,7 @@ extension String
         return false
     }
     
-    var trim : String
+    public var trim: String
     {
         return self.trimmingCharacters(in: .whitespacesAndNewlines)
     }
