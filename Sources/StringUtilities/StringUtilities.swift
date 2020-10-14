@@ -14,7 +14,7 @@ public enum HorizontalAlignment
     case Right
     case Justified
     var name: String {
-        if self == .Left   { return "Left"      }
+             if self == .Left   { return "Left"      }
         else if self == .Center { return "Center"    }
         else if self == .Right  { return "Right"     }
         else                    { return "Justified" }
@@ -27,13 +27,13 @@ public enum VerticalAlignment
     case Middle
     case Bottom
     var name: String {
-        if self == .Top    { return "Top"    }
+             if self == .Top    { return "Top"    }
         else if self == .Middle { return "Middle" }
         else                    { return "Bottom" }
     }
 }
 
-let SMALL_WORDS = ["a", "an", "and", "the"]
+public let SMALL_WORDS = ["a", "an", "and", "the"]
 
 extension NSMutableAttributedString
 {
@@ -113,7 +113,7 @@ extension String
 //        return colorFrom(self)
 //    }
     
-    var isNumber: Bool {
+    public var isNumber: Bool {
         return Double(self) != nil
     }
     
@@ -145,7 +145,7 @@ extension String
         return newString
     }
     
-    var length : Int
+    public var length : Int
     {
         return self.count
     }
@@ -375,39 +375,39 @@ extension String
     
     // Subscripting
     
-    subscript (i: Int) -> Character
+    public subscript (i: Int) -> Character
     {
         return self[index(startIndex, offsetBy: i)]
     }
     
-    subscript (bounds: CountableRange<Int>) -> Substring
+    public subscript (bounds: CountableRange<Int>) -> Substring
     {
         let start = index(startIndex, offsetBy: bounds.lowerBound)
         let end = index(startIndex, offsetBy: bounds.upperBound)
         return self[start ..< end]
     }
     
-    subscript (bounds: CountableClosedRange<Int>) -> Substring
+    public subscript (bounds: CountableClosedRange<Int>) -> Substring
     {
         let start = index(startIndex, offsetBy: bounds.lowerBound)
         let end = index(startIndex, offsetBy: bounds.upperBound)
         return self[start ... end]
     }
     
-    subscript (bounds: CountablePartialRangeFrom<Int>) -> Substring
+    public subscript (bounds: CountablePartialRangeFrom<Int>) -> Substring
     {
         let start = index(startIndex, offsetBy: bounds.lowerBound)
         let end = index(endIndex, offsetBy: -1)
         return self[start ... end]
     }
     
-    subscript (bounds: PartialRangeThrough<Int>) -> Substring
+    public subscript (bounds: PartialRangeThrough<Int>) -> Substring
     {
         let end = index(startIndex, offsetBy: bounds.upperBound)
         return self[startIndex ... end]
     }
     
-    subscript (bounds: PartialRangeUpTo<Int>) -> Substring
+    public subscript (bounds: PartialRangeUpTo<Int>) -> Substring
     {
         let end = index(startIndex, offsetBy: bounds.upperBound)
         return self[startIndex ..< end]
