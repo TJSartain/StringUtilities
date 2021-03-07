@@ -293,10 +293,10 @@ extension String
     }
     
     public func draw(at pt: CGPoint,
-              font: UIFont? = UIFont.systemFont(ofSize: 12),
-              color: UIColor? = .black,
-              align: HorizontalAlignment? = .Center,
-              vAlign: VerticalAlignment? = .Middle)
+                     font: UIFont? = UIFont.systemFont(ofSize: 12),
+                     color: UIColor? = .black,
+                     align: HorizontalAlignment? = .Center,
+                     vAlign: VerticalAlignment? = .Middle)
     {
         let attributes: [NSAttributedString.Key : Any] = [.font: font!,
                                                           .foregroundColor: color!]
@@ -318,7 +318,23 @@ extension String
             y -= size.height
         }
         let rect = CGRect(x: x, y: y, width: size.width, height: size.height)
+        UIColor.red.withAlphaComponent(0.4).setFill()
+        UIBezierPath(rect: rect).fill()
         draw(in: rect, withAttributes: attributes)
+    }
+    
+    public func drawWithBasePoint(base: CGPoint,
+                                  angle: CGFloat,
+                                  font: UIFont)
+    {
+        let context = UIGraphicsGetCurrentContext()!
+        let t = CGAffineTransform(translationX: base.x, y: base.y)
+        let r = CGAffineTransform(rotationAngle: angle)
+        context.concatenate(t)
+        context.concatenate(r)
+        self.draw(at: CGPoint(x: 0, y: 0), font: font)
+        context.concatenate(r.inverted())
+        context.concatenate(t.inverted())
     }
     
     public func asLabel(_ size: CGFloat? = 13, _ color: UIColor? = .lightGray) -> NSMutableAttributedString
@@ -375,41 +391,50 @@ extension String
     
     // Subscripting
     
-    public subscript (i: Int) -> Character
+    public subscript (i: Int) -> String
     {
-        return self[index(startIndex, offsetBy: i)]
+        let start = index(startIndex, offsetBy: i)
+        let end = index(start, offsetBy: 1)
+        return String(self[start ..< end])
     }
     
-    public subscript (bounds: CountableRange<Int>) -> Substring
+    public subscript (r: Range<Int>) -> String
     {
-        let start = index(startIndex, offsetBy: bounds.lowerBound)
-        let end = index(startIndex, offsetBy: bounds.upperBound)
-        return self[start ..< end]
+        let start = index(startIndex, offsetBy: r.lowerBound)
+        let end = index(startIndex, offsetBy: r.upperBound)
+        return String(self[start ..< end])
     }
     
-    public subscript (bounds: CountableClosedRange<Int>) -> Substring
+    public subscript (r: CountableClosedRange<Int>) -> String
     {
-        let start = index(startIndex, offsetBy: bounds.lowerBound)
-        let end = index(startIndex, offsetBy: bounds.upperBound)
-        return self[start ... end]
+        let start = index(startIndex, offsetBy: r.lowerBound)
+        let end = index(start, offsetBy: r.upperBound - r.lowerBound)
+        return String(self[start ... end])
     }
     
-    public subscript (bounds: CountablePartialRangeFrom<Int>) -> Substring
+    public subscript (r: CountableRange<Int>) -> String
+    {
+        let start = index(startIndex, offsetBy: r.lowerBound)
+        let end = index(startIndex, offsetBy: r.upperBound)
+        return String(self[start ..< end])
+    }
+
+    public subscript (bounds: CountablePartialRangeFrom<Int>) -> String
     {
         let start = index(startIndex, offsetBy: bounds.lowerBound)
         let end = index(endIndex, offsetBy: -1)
-        return self[start ... end]
+        return String(self[start ... end])
     }
-    
-    public subscript (bounds: PartialRangeThrough<Int>) -> Substring
+
+    public subscript (bounds: PartialRangeThrough<Int>) -> String
     {
         let end = index(startIndex, offsetBy: bounds.upperBound)
-        return self[startIndex ... end]
+        return String(self[startIndex ... end])
     }
-    
-    public subscript (bounds: PartialRangeUpTo<Int>) -> Substring
+
+    public subscript (bounds: PartialRangeUpTo<Int>) -> String
     {
         let end = index(startIndex, offsetBy: bounds.upperBound)
-        return self[startIndex ..< end]
+        return String(self[startIndex ..< end])
     }
 }
