@@ -412,12 +412,12 @@ extension String
         return String(self[start ... end])
     }
     
-    public subscript (r: CountableRange<Int>) -> String
-    {
-        let start = index(startIndex, offsetBy: r.lowerBound)
-        let end = index(startIndex, offsetBy: r.upperBound)
-        return String(self[start ..< end])
-    }
+//    public subscript (r: CountableRange<Int>) -> String
+//    {
+//        let start = index(startIndex, offsetBy: r.lowerBound)
+//        let end = index(startIndex, offsetBy: r.upperBound)
+//        return String(self[start ..< end])
+//    }
 
     public subscript (bounds: CountablePartialRangeFrom<Int>) -> String
     {
