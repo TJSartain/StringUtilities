@@ -318,7 +318,7 @@ extension String
             y -= size.height
         }
         let rect = CGRect(x: x, y: y, width: size.width, height: size.height)
-        UIColor.red.withAlphaComponent(0.4).setFill()
+//        UIColor.red.withAlphaComponent(0.4).setFill()
         UIBezierPath(rect: rect).fill()
         draw(in: rect, withAttributes: attributes)
     }
