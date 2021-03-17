@@ -325,14 +325,15 @@ extension String
     
     public func drawWithBasePoint(base: CGPoint,
                                   angle: CGFloat,
-                                  font: UIFont)
+                                  font: UIFont,
+                                  color: UIColor? = .black)
     {
         let context = UIGraphicsGetCurrentContext()!
         let t = CGAffineTransform(translationX: base.x, y: base.y)
         let r = CGAffineTransform(rotationAngle: angle)
         context.concatenate(t)
         context.concatenate(r)
-        self.draw(at: CGPoint(x: 0, y: 0), font: font)
+        self.draw(at: CGPoint(x: 0, y: 0), font: font, color: color)
         context.concatenate(r.inverted())
         context.concatenate(t.inverted())
     }
